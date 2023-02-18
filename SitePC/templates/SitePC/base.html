@@ -15,17 +15,22 @@
             <h5 class="my-0 font-weight-normal"><a href="{% url 'home' %}" style="color: black">SitePC</a>
             </h5>
             <nav class="pl-5 my-0 mr-md-auto font-weight-normal">
-                {% get_Categoryes as categoryes %}
-                {% for c in categoryes %}
-                    <a class="p-2 text-dark" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
-                {% endfor %}
+                {% if cat_selected == 0 %}
+                    <a class="btn p-2 text-dark selected rounded" disabled href="/">Все категории</a>
+                {% else %}
+                    <a class="btn p-2 text-dark rounded" href="{% url 'home' %}">Все категории</a>
+
+                {% endif %}
+                {% get_Categoryes cat_selected=cat_selected %}
+
+
             </nav>
             <nav class="my-2 my-md-auto mr-md-3">
                 {% for m in menu %}
                     {% if not forloop.last %}
-                        <a class="p-2 text-dark" href="{% url m.url_name %}">{{ m.title }}</a>
+                        <a class="btn p-2 text-dark rounded selected" href="{% url m.url_name %}">{{ m.title }}</a>
                     {% else %}
-                        <a class="btn btn-outline-primary" href="{% url m.url_name %}">{{ m.title }}</a>
+                        <a class="btn p-2 rounded btn-outline-success" href="{% url m.url_name %}">{{ m.title }}</a>
                     {% endif %}
                 {% endfor %}
             </nav>

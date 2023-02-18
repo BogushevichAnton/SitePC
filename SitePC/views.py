@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import *
 
@@ -10,35 +10,16 @@ menu = [{'title': 'Главная', 'url_name': 'home'},
         {'title': 'Вход', 'url_name': 'helper'}
         ]
 
+
 def index(request):
     posts = PC.objects.all()
     context = {'posts': posts,
                'menu': menu,
-               'title': 'Главная страница'}
-    #context.update({'h1':'ghbdtn'})
+               'title': 'Главная страница',
+               'cat_selected': 0,
+               }
+    # context.update({'h1':'ghbdtn'})
     return render(request, "SitePC/index.html", context=context)
-
-def gamers(request):
-    posts = PC.objects.filter(cat__name='Игровые')
-    context = {'posts': posts,
-               'menu': menu,
-               'title': 'Главная страница'}
-    return render(request, "SitePC/index.html", context=context)
-def gamers_home(request):
-    posts = PC.objects.filter(cat__name='Для офиса и дома')
-    context = {'posts': posts,
-               'menu': menu,
-               'title': 'Главная страница'}
-    return render(request, "SitePC/index.html", context=context)
-def laptops(request):
-    posts = PC.objects.filter(cat__name='Ноутбуки')
-    context = {'posts': posts,
-               'menu': menu,
-               'title': 'Главная страница'}
-    return render(request, "SitePC/index.html", context=context)
-
-
-
 
 
 def about(request):
@@ -53,25 +34,28 @@ def helper(request):
     return render(request, "SitePC/help.html", context=context)
 
 
-def showPC(request, post_id):
-    post = PC.objects.filter(pk=post_id)
-    if len(post) == 0:
-        return HttpResponseNotFound('<h1> Страница не найдена </h1>')
-    else:
-        context = {'title': 'Инфа о товаре',
-                   'posts': post,
-                   'menu': menu}
-        return render(request, "SitePC/post.html", context=context)
+def showPC(request, post_slug):
+    product = get_object_or_404(PC, slug=post_slug)
+    # product = PC.objects.filter(pk=post_id)
+    context = {'title': 'Инфа о товаре',
+               'post': product,
+               'cat_selected': product.cat_id,
+               'menu': menu}
+    return render(request, "SitePC/post.html", context=context)
 
-def category(request, cat_id):
-    posts = PC.objects.filter(cat_id=cat_id)
+
+def category(request, cat_slug):
+    c = Category.objects.get(slug=cat_slug)
+    posts = PC.objects.filter(cat_id=c.id)
     if len(posts) == 0:
         return HttpResponseNotFound('<h1> Страница не найдена </h1>')
     else:
         context = {'title': 'Инфа о товаре',
                    'posts': posts,
+                   'cat_selected': c.id,
                    'menu': menu}
         return render(request, "SitePC/index.html", context=context)
+
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1> Страница не найдена </h1>')

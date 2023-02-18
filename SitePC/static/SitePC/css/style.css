@@ -26,7 +26,16 @@ body {
 .text {
     text-align: center;
 }
-.main_section{
-  background-color: #eee;
-  height: 100%
+
+.main_section {
+    background-color: #eee;
+    height: 100%
+}
+
+.selected {
+    background-color: #eee;
+}
+
+.btn:hover {
+    background-color: #eee;
 }

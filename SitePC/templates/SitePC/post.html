@@ -1,8 +1,6 @@
 {% extends 'SitePC/base.html' %}
 <title>{{ title }}</title>
 {% block content %}
-    {% for p in posts %}
-        <h1>{{ p.title }}</h1>
-        <h1>{{ p.content }}</h1>
-    {% endfor %}
+        <h1>{{ post.title }}</h1>
+        <h1>{{ post.content }}</h1>
 {% endblock %}

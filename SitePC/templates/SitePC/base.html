@@ -2,6 +2,7 @@
 <head>
     <title>{{ title }}</title>
     {% load static %}
+    {% load SitePC_tags %}
     <link rel="stylesheet" type="text/css" href="{% static 'SitePC/css/bootstrap.css' %}">
     <script src="{% static 'SitePC/js/bootstrap.js' %}"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
@@ -11,9 +12,15 @@
 <div class="wrapper">
     {% block mainmenu %}
         <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-10 bg-white border-bottom box-shadow">
-            <h5 class="my-0 mr-md-auto font-weight-normal"><a href="{% url 'home' %}" style="color: black">SitePC</a>
+            <h5 class="my-0 font-weight-normal"><a href="{% url 'home' %}" style="color: black">SitePC</a>
             </h5>
-            <nav class="my-2 my-md-0 mr-md-3">
+            <nav class="pl-5 my-0 mr-md-auto font-weight-normal">
+                {% get_Categoryes as categoryes %}
+                {% for c in categoryes %}
+                    <a class="p-2 text-dark" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                {% endfor %}
+            </nav>
+            <nav class="my-2 my-md-auto mr-md-3">
                 {% for m in menu %}
                     {% if not forloop.last %}
                         <a class="p-2 text-dark" href="{% url m.url_name %}">{{ m.title }}</a>
@@ -24,12 +31,14 @@
             </nav>
 
         </div>
+
+
     {% endblock mainmenu %}
     <div class="content">
         <section class="main_section">
-        {% block content %}
+            {% block content %}
 
-        {% endblock content %}
+            {% endblock content %}
         </section>
     </div>
 

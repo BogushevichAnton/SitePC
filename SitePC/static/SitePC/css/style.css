@@ -31,11 +31,16 @@ body {
     background-color: #eee;
     height: 100%
 }
-
+.content{
+    background-color: #eee;
+}
 .selected {
     background-color: #eee;
 }
 
 .btn:hover {
     background-color: #eee;
+}
+.title_content{
+    font-size: 20px;
 }

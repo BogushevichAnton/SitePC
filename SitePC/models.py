@@ -5,6 +5,7 @@ from django.urls import reverse
 class PC(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
+    components = models.CharField(max_length=255, null=True)
     content = models.TextField(blank=True)
     photo = models.ImageField(upload_to="photos/%Y/%m/%d/")
     price = models.CharField(max_length=25)
@@ -17,7 +18,7 @@ class PC(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('product', kwargs={'post_slug': self.slug})
+        return reverse('product', kwargs={'slug': self.slug})
 
 
 class Category(models.Model):

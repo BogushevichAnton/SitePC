@@ -1,6 +1,24 @@
 {% extends 'SitePC/base.html' %}
 <title>{{ title }}</title>
 {% block content %}
-        <h1>{{ post.title }}</h1>
-        <h1>{{ post.content }}</h1>
+    <div class="container">
+        <div class="row h3 mb-4 mt-2">Характеристики {{ post.title }}</div>
+
+        <div class="row border border-5" style="background-color: white">
+            <div class="col-md-3">
+                <img src="{{ post.photo.url }} " class="card-img">
+            </div>
+            <div class="col-md-9">
+                <div class="card-body">
+                    <p class="card-title title_content">Добавить БД краткое содержание {{ post.title }}</p>
+                    <p class="text-justify title_content">{{ post.content }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
 {% endblock %}

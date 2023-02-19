@@ -1,11 +1,11 @@
 from django.urls import path
 
-from SitePC.views import index, about, helper, showPC, category
+from SitePC.views import about, helper, Home, Category, ShowPC
 
 urlpatterns = [
-    path('', index, name='home'),
+    path('', Home.as_view(), name='home'),
     path('about/', about, name='about'),
     path('help/', helper, name='helper'),
-    path('product/<slug:post_slug>/', showPC, name = 'product'),
-    path('category/<slug:cat_slug>', category, name='category'),
+    path('product/<slug:slug>/', ShowPC.as_view(), name = 'product'),
+    path('category/<slug:cat_slug>', Category.as_view(), name='category'),
 ]

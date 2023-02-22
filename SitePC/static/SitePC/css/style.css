@@ -39,6 +39,7 @@ body {
 }
 
 .btn:hover {
+    color: black;
     background-color: #eee;
 }
 .title_content{

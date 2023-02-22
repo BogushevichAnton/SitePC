@@ -12,27 +12,32 @@
 <div class="wrapper">
     {% block mainmenu %}
         <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-10 bg-white border-bottom box-shadow">
-            <h5 class="my-0 font-weight-normal"><a href="{% url 'home' %}" style="color: black">SitePC</a>
+            <h5 class="my-0 font-weight-normal"><a href="{% url 'home' %}" style="  color: black">SitePC</a>
             </h5>
             <nav class="pl-5 my-0 mr-md-auto font-weight-normal">
                 {% if cat_selected == 0 %}
                     <a class="btn p-2 text-dark selected rounded" disabled href="/">Все категории</a>
                 {% else %}
                     <a class="btn p-2 text-dark rounded" href="{% url 'home' %}">Все категории</a>
-
                 {% endif %}
-                {% get_Categoryes cat_selected=cat_selected %}
-
-
+                {% for c in cats %}
+                    {% if c.pk == cat_selected %}
+                        <a class="btn p-2 text-dark rounded selected" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                    {% else %}
+                        <a class="btn p-2 text-dark rounded" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                    {% endif %}
+                {% endfor %}
             </nav>
             <nav class="my-2 my-md-auto mr-md-3">
                 {% for m in menu %}
                     {% if not forloop.last %}
-                        <a class="btn p-2 text-dark rounded selected" href="{% url m.url_name %}">{{ m.title }}</a>
+                        <a class="btn p-2 text-dark rounded" href="{% url m.url_name %}">{{ m.title }}</a>
                     {% else %}
-                        <a class="btn p-2 rounded btn-outline-success" href="{% url m.url_name %}">{{ m.title }}</a>
+
                     {% endif %}
                 {% endfor %}
+                <a class="btn p-2 rounded btn-outline-success" href="{% url 'register' %}">Регистрация</a>
+                <a class="btn p-2 rounded btn-outline-success" href="#!">Войти</a>
             </nav>
 
         </div>

@@ -2,9 +2,12 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from django.urls import reverse_lazy
+
+from accounts.forms import RegisterUserForm
 from .models import *
 from .utils import *
 from .forms import *
+
 
 
 class Home(DataMixin, ListView):

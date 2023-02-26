@@ -1,3 +1,5 @@
+
+
 {% extends 'SitePC/base.html' %}
 
 {% block content %}
@@ -14,8 +16,8 @@
                                     {{ f }}
                                     <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
                                 </div>
-                                <div class="form-outline ml-3" style="color: red">
-                                    <label class="form-label">{{ f.errors }}</label>
+                                <div class="form-outline" style="color: red">
+                                    <label class="form-label mw-100">{{ f.errors }}</label>
                                 </div>
                             {% endfor %}
                             <div class="d-flex justify-content-center">

@@ -33,84 +33,47 @@
                     {#Здесь сделать вывод {{ f }} - наши данные уже с формс.ру с accounts#}
                     <form method="post">
                         {% csrf_token %}
+                        <div class="row mt-2">
+                            {% for f in form %}
+                                {% if f.name == 'first_name' or f.name == 'last_name' %}
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
+                                        {{ f }}
+                                        <div class="form-outline" style="color: red">
+                                            <label class="form-label mw-100">{{ f.errors }}</label>
+                                        </div>
+                                    </div>
 
-                        {% for f in form %}
-                            <div class="form-outline mb-1">
-                                {{ f }}
-                                <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
-                            </div>
-                            <div class="form-outline" style="color: red">
-                                <label class="form-label mw-100">{{ f.errors }}</label>
-                            </div>
-                        {% endfor %}
+                                {% endif %}
+
+                            {% endfor %}
+                        </div>
+                        <div class="row mt-3">
+                            {% for f in form %}
+                                {% if f.name != 'first_name' and f.name != 'last_name' %}
+                                    <div class="col-md-12">
+                                        <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
+                                        {{ f }}
+                                        <div class="form-outline" style="color: red">
+                                            <label class="form-label mw-100">{{ f.errors }}</label>
+                                        </div>
+                                    </div>
+
+
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+
                         <button type="submit"
-                                class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
+                                class="btn btn-success btn-block btn-lg">
                             Отправить
                         </button>
                     </form>
-
-
-                    <div class="row mt-2">
-                        <div class="col-md-6"><label class="labels">Имя</label>
-                            <input disabled type="text" class="form-control" placeholder="first name"
-                                   value="{{ user.first_name }}">
-                        </div>
-                        <div class="col-md-6"><label class="labels">Фамилия</label><input type="text"
-                                                                                          class="form-control"
-                                                                                          value="{{ user.last_name }}"
-                                                                                          placeholder="surname"></div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text"
-                                                                                                 class="form-control"
-                                                                                                 placeholder="enter phone number"
-                                                                                                 value="{{ user.mobile }}">
-                        </div>
-                        <div class="col-md-12"><label class="labels">password</label><input type="text"
-                                                                                            class="form-control"
-                                                                                            placeholder="enter address line 1"
-                                                                                            value="{{ user.password }}">
-                        </div>
-                        <div class="col-md-12"><label class="labels">Address Line 2</label><input type="text"
-                                                                                                  class="form-control"
-                                                                                                  placeholder="enter address line 2"
-                                                                                                  value=""></div>
-                        <div class="col-md-12"><label class="labels">Postcode</label><input type="text"
-                                                                                            class="form-control"
-                                                                                            placeholder="enter address line 2"
-                                                                                            value=""></div>
-                        <div class="col-md-12"><label class="labels">State</label><input type="text"
-                                                                                         class="form-control"
-                                                                                         placeholder="enter address line 2"
-                                                                                         value=""></div>
-                        <div class="col-md-12"><label class="labels">Area</label><input type="text" class="form-control"
-                                                                                        placeholder="enter address line 2"
-                                                                                        value=""></div>
-                        <div class="col-md-12"><label class="labels">Email ID</label><input type="text"
-                                                                                            class="form-control"
-                                                                                            placeholder="enter email id"
-                                                                                            value=""></div>
-                        <div class="col-md-12"><label class="labels">Education</label><input type="text"
-                                                                                             class="form-control"
-                                                                                             placeholder="education"
-                                                                                             value=""></div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6"><label class="labels">Country</label><input type="text"
-                                                                                          class="form-control"
-                                                                                          placeholder="country"
-                                                                                          value=""></div>
-                        <div class="col-md-6"><label class="labels">State/Region</label><input type="text"
-                                                                                               class="form-control"
-                                                                                               value=""
-                                                                                               placeholder="state">
-                        </div>
-                    </div>
-                    <div class="mt-5 text-center">
-                        <button class="btn btn-primary profile-button" type="button">Save Profile</button>
-                    </div>
                 </div>
             </div>
+
+
             <div class="col-md-4">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center experience">

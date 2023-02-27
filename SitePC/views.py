@@ -1,9 +1,13 @@
+from urllib import request
+from venv import logger
+
 from django.contrib.auth import logout, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponse, HttpResponseNotFound
+from django.core.checks import messages
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView, TemplateView, CreateView
+from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -18,18 +22,27 @@ from django_currentuser.middleware import (
     get_current_user, get_current_authenticated_user)
 
 
-class Profile(DataMixin, generic.UpdateView):
+class Profile(DataMixin, UpdateView):
     form_class = UserUpdateForm
     template_name = "SitePC/profile.html"
+
     success_url = reverse_lazy('home')
     def get_object(self):
-        return self.request.user
+        return get_current_authenticated_user()
+
     def get_context_data(self, *, object_list=None, **kwargs):
+
         context = super().get_context_data(**kwargs)
-        user = get_current_user()
-        context['user'] = user
-        c_def = self.get_user_context(title='Профиль ' + context['user'].email, user=context['user'])
+        if len(context['form'].errors) != 0:
+            user = get_object_or_404(User, pk=get_current_authenticated_user().id)
+            context['user'] = user
+            c_def = self.get_user_context(title='Профиль ' + context['user'].email,
+                                      user=context['user'])
+        else:
+            c_def = self.get_user_context(title='Профиль ' + context['user'].email,
+                                      user=context['user'])
         return dict(list(context.items()) + list(c_def.items()))
+
 
 class Home(DataMixin, ListView):
     model = PC

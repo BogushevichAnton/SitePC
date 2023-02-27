@@ -48,19 +48,31 @@ class AuthUserForm(AuthenticationForm):
 
 
 class UserUpdateForm(UserChangeForm):
+    email = forms.CharField(error_messages={"unique": "Уже есть пользователь с таким e-mail адресом."},
+                            label='E-mail',
+                            widget=forms.EmailInput(
+                                attrs={'class': 'form-control'}
+                            ))
 
-    email = forms.CharField(label='E-mail',
-                            widget=forms.EmailInput())
-
-    first_name = forms.CharField(label='Имя', widget=forms.TextInput())
-    last_name = forms.CharField(label='Фамилия', widget=forms.TextInput())
-    date_of_birth = forms.DateTimeField(label='Дата рождения', input_formats=['%d.%m.%Y'], widget=forms.DateInput())
+    first_name = forms.CharField(label='Имя', widget=forms.TextInput(
+        attrs={'class': 'form-control'}
+    ))
+    last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(
+        attrs={'class': 'form-control'}
+    ))
+    date_of_birth = forms.DateTimeField(label='Дата рождения', input_formats=['%d.%m.%Y'], widget=forms.DateInput(
+        attrs={'class': 'form-control form-input'}
+    ))
     mobile = forms.CharField(error_messages={"unique": "Уже есть пользователь с таким номером телефона."},
-                             label='Номер телефона', widget=forms.TextInput())
-    address = forms.CharField(label='Адрес', widget=forms.TextInput())
+                             label='Номер телефона', widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        ))
+    address = forms.CharField(label='Адрес', widget=forms.TextInput(
+        attrs={'class': 'form-control'}
+    ), required=False)
     password = None
 
     class Meta:
         model = User
         fields = (
-            'email', 'first_name', 'last_name', 'date_of_birth', 'mobile', 'address')
+            'first_name', 'last_name', 'email', 'date_of_birth', 'mobile', 'address')

@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField, UserChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
@@ -8,6 +8,7 @@ from .models import *
 User = get_user_model()
 
 
+# Берем Register и закидываем на него UserChangeForm
 class RegisterUserForm(UserCreationForm):
     email = forms.CharField(error_messages={"unique": "Уже есть пользователь с таким e-mail."}, label='E-mail',
                             widget=forms.EmailInput(
@@ -44,3 +45,22 @@ class AuthUserForm(AuthenticationForm):
 
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(
         attrs={'class': 'form-control form-control-lg form-input', 'placeholder': 'Пароль'}))
+
+
+class UserUpdateForm(UserChangeForm):
+
+    email = forms.CharField(label='E-mail',
+                            widget=forms.EmailInput())
+
+    first_name = forms.CharField(label='Имя', widget=forms.TextInput())
+    last_name = forms.CharField(label='Фамилия', widget=forms.TextInput())
+    date_of_birth = forms.DateTimeField(label='Дата рождения', input_formats=['%d.%m.%Y'], widget=forms.DateInput())
+    mobile = forms.CharField(error_messages={"unique": "Уже есть пользователь с таким номером телефона."},
+                             label='Номер телефона', widget=forms.TextInput())
+    address = forms.CharField(label='Адрес', widget=forms.TextInput())
+    password = None
+
+    class Meta:
+        model = User
+        fields = (
+            'email', 'first_name', 'last_name', 'date_of_birth', 'mobile', 'address')

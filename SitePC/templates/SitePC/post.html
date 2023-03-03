@@ -3,17 +3,111 @@
 {% block content %}
     <div class="container">
         <div class="row h3 mb-4 mt-2">Характеристики {{ post.title }}</div>
-
         <div class="row border border-5" style="background-color: white">
-            <div class="col-md-3">
-                <img src="{{ post.photo.url }} " class="card-img">
+            <div class="col-md-3 mt-3">
+                <img src="{{ post.photo.url }}" class="card-img">
             </div>
             <div class="col-md-9">
                 <div class="card-body">
-                    <p class="card-title title_content">Добавить БД краткое содержание {{ post.title }}</p>
+                    <p class="card-title title_content">{{ post.cpu }}, {{ post.cpu.count_core }} * {{ post.cpu.value }}
+                        ГГц,
+                        {% if post.count_ram == 1 %}
+                            {{ post.ram.memory }}
+                        {% else %}
+                            {{ post.count_ram }} * {{ post.ram.memory }}
+                        {% endif %}
+                        ГБ {{ post.ram.type }},
+                        {{ post.video }}, SSD
+                        {% if post.count_data == 1 %}
+                            {{ post.data.memory }}
+                        {% else %}
+                            {{ post.count_data }} * {{ post.data.memory }}
+                        {% endif %}
+                        ГБ</p>
                     <p class="text-justify title_content">{{ post.content }}</p>
                 </div>
             </div>
+        </div>
+
+        <div class="row g-2 mt-2 border border-5 mb-3" style="background-color: white">
+            <div class="col-md-8  border border-5">
+                <p class="text-center title_content h2 p-2">Характеристики {{ post.title }}</p>
+                <p class="font-weight-bold mb-2">Общие параметры</p>
+                <div class="row">
+                    <div class="col-md-8 border-end mb-2">
+                        <div style="border-bottom: dotted black; border-bottom-width: 2px;">
+                            Модель
+                        </div>
+                    </div>
+                    <div class="col-md-4">{{ post.title }}
+                    </div>
+                    <div class="col-md-8 border-end mb-2">
+                        <div style="border-bottom: dotted black; border-bottom-width: 2px;">
+                            Модель
+                        </div>
+                    </div>
+                    <div class="col-md-4">{{ post.title }}
+                    </div>
+                </div>
+
+                <p class="font-weight-bold mb-2">Процессор</p>
+                <div class="row">
+                    <div class="col-md-8 border-end mb-2">
+                        <div style="border-bottom: dotted black; border-bottom-width: 2px;">
+                            Модель процессора
+                        </div>
+                    </div>
+                    <div class="col-md-4">{{ post.cpu.title }}
+                    </div>
+                    <div class="col-md-8 border-end mb-2">
+                        <div style="border-bottom: dotted black; border-bottom-width: 2px;">
+                            Количество ядер процессора
+                        </div>
+                    </div>
+                    <div class="col-md-4">{{ post.cpu.count_core }}
+                    </div>
+                    <div class="col-md-8 border-end mb-2">
+                        <div style="border-bottom: dotted black; border-bottom-width: 2px;">
+                            Количество потоков
+                        </div>
+                    </div>
+                    <div class="col-md-4">{{ post.cpu.count_threads }}
+                    </div>
+                    <div class="col-md-8 border-end mb-2">
+                        <div style="border-bottom: dotted black; border-bottom-width: 2px;">
+                            Частота процессора
+                        </div>
+                    </div>
+                    <div class="col-md-4">{{ post.cpu.value }} ГГц
+                    </div>
+                    <div class="col-md-8 border-end mb-2">
+                        <div style="border-bottom: dotted black; border-bottom-width: 2px;">
+                            Автоматическое увеличение частоты
+                        </div>
+                    </div>
+                    <div class="col-md-4">{{ post.cpu.max_value }} ГГц
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 border border-5">
+                <div class="p-2">
+                    <p class="text-center title_content">Для покупок</p>
+                </div>
+            </div>
+
+            {#                <div class="p-2">#}
+            {#                    <p class="text-center title_content h2">Характеристики {{ post.title }}</p>#}
+            {#                </div>#}
+            {#                <div class="text-justify title_content container">#}
+            {#                    <div class="col-md-11">#}
+            {#                        <p class="font-weight-bold">Общие параметры</p>#}
+            {#                    </div>#}
+            {#                    <div class="txt col-md-8">#}
+            {#                        123#}
+            {#                    </div>#}
+            {#                </div>#}
+
+
         </div>
     </div>
 

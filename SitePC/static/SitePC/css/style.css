@@ -16,7 +16,6 @@ body {
 
 .content {
     flex: 1 0 auto;
-
 }
 
 .footer {
@@ -54,4 +53,7 @@ body {
     color: red;
     list-style-type: disc;
     list-style-position: inside;
+}
+.green-color{
+    color: green;
 }

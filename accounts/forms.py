@@ -61,8 +61,8 @@ class UserUpdateForm(UserChangeForm):
         attrs={'class': 'form-control'}
     ))
     date_of_birth = forms.DateTimeField(label='Дата рождения', input_formats=['%d.%m.%Y'], widget=forms.DateInput(
-        attrs={'class': 'form-control form-input'}
-    ))
+        attrs={'class': 'form-control form-input', 'data-toggle': 'datepicker',
+               'placeholder': 'Дата рождения'}))
     mobile = forms.CharField(error_messages={"unique": "Уже есть пользователь с таким номером телефона."},
                              label='Номер телефона', widget=forms.TextInput(
             attrs={'class': 'form-control'}

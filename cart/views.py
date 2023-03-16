@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
@@ -46,3 +48,9 @@ def cart_detail(request, **kwargs):
         context['cat_selected'] = 0
 
     return render(request, 'cart/detail.html', {'cart': cart, 'menu':menu, 'cats':cats})
+
+def cart_search(request, product_id):
+    cart = Cart(request)
+    key = cart.search(product_id)
+    return key
+

@@ -20,7 +20,9 @@ from accounts.models import User
 from django_currentuser.middleware import (
     get_current_user, get_current_authenticated_user)
 
+from cart.cart import Cart
 from cart.forms import CartAddPCForm
+from cart.views import cart_search
 
 
 class Profile(DataMixin, UpdateView):
@@ -85,7 +87,8 @@ class ShowPC(DataMixin, DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         cart_pc_form = CartAddPCForm()
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Купить ' + context['post'].title, cat_selected=context['post'].cat_id, cart_pc_form=cart_pc_form)
+        key = cart_search(self.request, context['post'].id)
+        c_def = self.get_user_context(title='Купить ' + context['post'].title, cat_selected=context['post'].cat_id, cart_pc_form=cart_pc_form, key=key)
         return dict(list(context.items()) + list(c_def.items()))
 
 

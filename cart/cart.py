@@ -58,7 +58,12 @@ class Cart(object):
         if product_id in self.cart:
             del self.cart[product_id]
             self.save()
-
+    def search(self, product):
+        product_id = str(product)
+        if product_id in self.cart:
+            return True
+        else:
+            return False
     def get_total_price(self):
         """
         Подсчет стоимости товаров в корзине.

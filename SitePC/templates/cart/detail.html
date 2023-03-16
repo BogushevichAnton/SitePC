@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block title %}
-  Корзина покупок
+Корзина покупок
 {% endblock %}
 
 {% block content %}
-  <h1>Корзина покупок</h1>
-  <table class="cart">
+<h1>Корзина покупок</h1>
+<table class="cart">
     <thead>
-      <tr>
+    <tr>
         <th>Картинка</th>
         <th>Товар</th>
         <th>Обновить кол-во</th>
@@ -17,44 +17,162 @@
         <th>Кол-во</th>
         <th>Цена за шт</th>
         <th>Общая стоимость</th>
-      </tr>
+    </tr>
     </thead>
     <tbody>
-      {% for item in cart %}
-        {% with product=item.product %}
-          <tr>
-            <td>
-              <a href="{{ product.get_absolute_url }}">
+    {% for item in cart %}
+    {% with product=item.product %}
+    <tr>
+        <td>
+            <a href="{{ product.get_absolute_url }}">
                 <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
-              </a>
-            </td>
-            <td>{{ product.name }}</td>
-            <td>
-              <form action="{% url 'cart:cart_add' product.id %}" method="post">
+            </a>
+        </td>
+        <td>{{ product.title }}</td>
+        <td>
+            <form action="{% url 'cart:cart_add' product.id %}" method="post">
                 {{ item.update_quantity_form.quantity }}
                 {{ item.update_quantity_form.update }}
                 <input type="submit" value="Обновить">
                 {% csrf_token %}
-              </form>
-            </td>
-            <td><a href="{% url 'cart:cart_remove' product.id %}">Удалить</a></td>
-            <td>
-              {{ item.quantity }}
-            </td>
-            <td class="num">${{ item.price }}</td>
-            <td class="num">${{ item.total_price }}</td>
-          </tr>
-        {% endwith %}
-      {% endfor %}
-      <tr class="total">
+            </form>
+        </td>
+        <td><a href="{% url 'cart:cart_remove' product.id %}">Удалить</a></td>
+        <td>
+            {{ item.quantity }}
+        </td>
+        <td class="num">${{ item.price }}</td>
+        <td class="num">${{ item.total_price }}</td>
+    </tr>
+    {% endwith %}
+    {% endfor %}
+    <tr class="total">
         <td>Всего</td>
         <td colspan="4"></td>
         <td class="num">${{ cart.get_total_price }}</td>
-      </tr>
+    </tr>
     </tbody>
-  </table>
-  <p class="text-right">
+</table>
+<p class="text-right">
     <a href="{% url 'home' %}" class="button light">В магазин</a>
     <a href="#" class="button">Оформить заказ</a>
-  </p>
+</p>
+
+<div class="card" style="background-color: #eee; border:none;">
+    <div class="card-body">
+        <div class="row align-items-center col-md-12 ">
+            <div class="col col-md-2">
+            </div>
+            <div class="col-md-2 d-flex justify-content-center">
+                <p class="text-center text-muted">
+                    Наименование
+                </p>
+            </div>
+            <div class="col col-md-2 d-flex justify-content-center">
+                <p class="text-center text-muted">
+                    Краткое описание
+                </p>
+            </div>
+            <div class="col col-md-2 d-flex justify-content-center">
+                <p class="text-center text-muted">
+                    Количество
+                </p>
+            </div>
+            <div class="col col-md-1 d-flex justify-content-center">
+                <p class="text-center text-muted">
+                    Стоимость за шт.
+                </p>
+            </div>
+            <div class="col col-md-2 d-flex justify-content-center">
+                <p class="text-center text-muted">
+                    Итоговая стоимость
+                </p>
+            </div>
+            <div class="col col-md-1 d-flex justify-content-center">
+                <p class="text-center text-muted">
+                    Удалить из корзины
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% for item in cart %}
+{% with product=item.product %}
+<div class="card">
+    <div class="card-body">
+        <div class="row align-items-center col-md-12">
+            <div class="col-md-2 d-flex justify-content-center">
+                <img src="{{ product.photo.url }}"
+                     class="img-thumbnail">
+            </div>
+            <div class="col-md-2 d-flex justify-content-center">
+                <p class="text-center">{{ product.title }}</p>
+            </div>
+            <div class="col-md-2 d-flex justify-content-center">
+                <p class="text-center">
+                    {{ product.cpu }}, {{ product.cpu.count_core }} * {{ product.cpu.value }}
+                    ГГц,
+                    {% if product.count_ram == 1 %}
+                    {{ product.ram.memory }}
+                    {% else %}
+                    {{ product.count_ram }} * {{ product.ram.memory }}
+                    {% endif %}
+                    ГБ {{ product.ram.type }},
+                    {{ product.video }}, SSD
+                    {% if product.count_data == 1 %}
+                    {{ product.data.memory }}
+                    {% else %}
+                    {{ product.count_data }} * {{ product.data.memory }}
+                    {% endif %}
+                    ГБ
+                </p>
+            </div>
+
+            <div class="col-md-2 d-flex justify-content-center">
+                <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                    <div class="text-center">
+                        <button class="btn btn-link"
+                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        {{ item.update_quantity_form.quantity }}
+                        <button class="btn btn-link"
+                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    {{ item.update_quantity_form.update }}
+                    {% csrf_token %}
+                </form>
+            </div>
+            <div class="col-md-1 d-flex justify-content-center">
+                <p class="text-center">{{ item.price }}</p>
+            </div>
+            <div class="col-md-2 d-flex justify-content-center">
+                <p class="text-center">{{ item.total_price }}</p>
+            </div>
+            <div class="col-md-1 d-flex justify-content-center">
+                <div class="text-center">
+                        <a href="{% url 'cart:cart_remove' product.id %}" style="color:red;"><i class="fa fa-trash red-color" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endwith %}
+{% endfor %}
+<div class="card mb-5">
+    <div class="card-body p-4">
+
+        <div class="float-end">
+            <p class="mb-0 me-5 d-flex align-items-center">
+                <span class="small text-muted me-2">Order total:</span> <span
+                    class="lead fw-normal">$799</span>
+            </p>
+        </div>
+
+    </div>
+</div>
+
+
 {% endblock %}

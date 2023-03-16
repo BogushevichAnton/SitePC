@@ -241,12 +241,15 @@
             <div class="row text-center">
                 <div class="col text-center">
                     {% if request.user.is_authenticated %}
+                    {% if key is False %}
                     <form action="{% url 'cart:cart_add' post.id %}" method="post">
                         {{ cart_pc_form }}
                         {% csrf_token %}
                         <button type="submit" class="btn btn-outline-success">В корзину</button>
                     </form>
-
+                    {% else %}
+                    <p>Товар уже в корзине <i class="fa fa-check green-color" aria-hidden="true"></i></p>
+                    {% endif %}
                     {% else %}
                     <p class="text-center title_content h2">Авторизируйтесь, чтобы добавить товар в корзину</p>
                     {% endif %}

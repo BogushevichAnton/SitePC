@@ -47,7 +47,7 @@ def cart_detail(request, **kwargs):
     if 'cat_selected' not in context:
         context['cat_selected'] = 0
 
-    return render(request, 'cart/detail.html', {'cart': cart, 'menu':menu, 'cats':cats})
+    return render(request, 'cart/detail.html', {'cart': cart, 'menu':menu, 'cats':cats, 'title': "Корзина"})
 
 def cart_search(request, product_id):
     cart = Cart(request)

@@ -22,6 +22,7 @@ from SitePC.views import pageNotFound
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('cart/', include('cart.urls')),
     path('', include('SitePC.urls')),
 ]
 

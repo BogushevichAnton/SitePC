@@ -1,5 +1,4 @@
 from urllib import request
-from venv import logger
 
 from django.contrib.auth import logout, login
 from django.contrib.auth.forms import AuthenticationForm
@@ -20,6 +19,8 @@ from django.contrib.auth.decorators import login_required
 from accounts.models import User
 from django_currentuser.middleware import (
     get_current_user, get_current_authenticated_user)
+
+from cart.forms import CartAddPCForm
 
 
 class Profile(DataMixin, UpdateView):
@@ -82,8 +83,9 @@ class ShowPC(DataMixin, DetailView):
     allow_empty = False
 
     def get_context_data(self, *, object_list=None, **kwargs):
+        cart_pc_form = CartAddPCForm()
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Купить ' + context['post'].title, cat_selected=context['post'].cat_id)
+        c_def = self.get_user_context(title='Купить ' + context['post'].title, cat_selected=context['post'].cat_id, cart_pc_form=cart_pc_form)
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -138,3 +140,4 @@ class LoginUser(DataMixin, LoginView):
 def logout_user(request):
     logout(request)
     return redirect('login')
+

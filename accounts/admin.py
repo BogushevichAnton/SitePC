@@ -24,8 +24,9 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'date_of_birth', 'mobile', 'address', 'password1', 'password2', 'is_active',
-                  'is_superuser', 'is_staff')
+        fields = (
+        'email', 'first_name', 'last_name', 'date_of_birth', 'mobile', 'address', 'password1', 'password2', 'is_active',
+        'is_superuser', 'is_staff')
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -50,7 +51,9 @@ class UserChangeForm(forms.ModelForm):
 
     first_name = forms.CharField(label='Имя', widget=forms.TextInput())
     last_name = forms.CharField(label='Фамилия', widget=forms.TextInput())
-    date_of_birth = forms.DateTimeField(label='Дата рождения', input_formats=['%d.%m.%Y'], widget=forms.DateInput())
+    date_of_birth = forms.DateTimeField(label='Дата рождения', input_formats=['%d.%m.%Y'], widget=forms.DateInput(
+        attrs={'class': 'form-control form-input', 'data-toggle': 'datepicker',
+               'placeholder': 'Дата рождения'}))
     mobile = forms.CharField(error_messages={"unique": "Уже есть пользователь с таким номером телефона."},
                              label='Номер телефона', widget=forms.TextInput())
     address = forms.CharField(label='Адрес', widget=forms.TextInput())

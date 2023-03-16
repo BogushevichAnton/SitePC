@@ -12,4 +12,5 @@ urlpatterns = [
     path('profile/', Profile.as_view(), name='profile'),
     path('product/<slug:slug>/', ShowPC.as_view(), name = 'product'),
     path('category/<slug:cat_slug>', Category.as_view(), name='category'),
+
 ]

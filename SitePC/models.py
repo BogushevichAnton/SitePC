@@ -24,8 +24,8 @@ class Video_Cards(models.Model):
     title = models.CharField(max_length=255, verbose_name="Наименование")
     type = models.ForeignKey('video_cards_type', on_delete=models.PROTECT, verbose_name="Тип")
     memory = models.IntegerField(null=True, blank=True, verbose_name="Количество памяти")
-    value = models.FloatField(null=True, blank=True, verbose_name="Частота работы видеочипа")  # ГГЦ
-    max_value = models.FloatField(null=True, blank=True, verbose_name="Турбочастота")  # буст
+    value = models.IntegerField(null=True, blank=True, verbose_name="Частота работы видеочипа")  # ГГЦ
+    max_value = models.IntegerField(null=True, blank=True, verbose_name="Турбочастота")  # буст
     type_memory = models.CharField(null=True, blank=True, max_length=15, verbose_name="Тип памяти")  # GDDR6X
 
     def __str__(self):
@@ -80,7 +80,7 @@ class PC(models.Model):
 
 
     garant = models.IntegerField(verbose_name="Гарантия в мес.")  # Гарантия 12 мес
-    price = models.CharField(max_length=25, verbose_name="Стоимость")
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Стоимость")
     def __str__(self):
         return self.title
 

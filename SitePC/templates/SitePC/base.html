@@ -9,7 +9,6 @@
     <script src="{% static 'SitePC/js/bootstrap.js' %}"></script>
     <script src="{% static 'SitePC/js/datepicker.js' %}"></script>
     <script src="{% static 'SitePC/js/main.js' %}"></script>
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
     <link rel="stylesheet" href="{% static 'SitePC/css/style.css' %}" type="text/css" class="">
@@ -17,41 +16,41 @@
 <body>
 <div class="wrapper">
     {% block mainmenu %}
-        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-10 bg-white border-bottom box-shadow">
-            <h5 class="my-0 font-weight-normal"><a href="{% url 'home' %}" style="  color: black">SitePC</a>
-            </h5>
-            <nav class="pl-5 my-0 mr-md-auto font-weight-normal">
-                {% if cat_selected == 0 %}
-                    <a class="btn p-2 text-dark selected rounded" disabled href="/">Все категории</a>
-                {% else %}
-                    <a class="btn p-2 text-dark rounded" href="{% url 'home' %}">Все категории</a>
-                {% endif %}
-                {% for c in cats %}
-                    {% if c.pk == cat_selected %}
-                        <a class="btn p-2 text-dark rounded selected" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
-                    {% else %}
-                        <a class="btn p-2 text-dark rounded" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
-                    {% endif %}
-                {% endfor %}
-            </nav>
-            <nav class="my-2 my-md-auto mr-md-3">
-                {% for m in menu %}
-                    <a class="btn p-2 text-dark rounded" href="{% url m.url_name %}">{{ m.title }}</a>
-                {% endfor %}
-                {% if request.user.is_authenticated %}
-                    <a class="btn p-2 text-dark rounded" href="{% url 'cart:cart_detail' %}">Корзина
-                        <i class="fa fa-shopping-basket green-color"></i>
-                    </a>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-10 bg-white border-bottom box-shadow">
+        <h5 class="my-0 font-weight-normal"><a href="{% url 'home' %}" style="  color: black">SitePC</a>
+        </h5>
+        <nav class="pl-5 my-0 mr-md-auto font-weight-normal">
+            {% if cat_selected == 0 %}
+            <a class="btn p-2 text-dark selected rounded" disabled href="/">Все категории</a>
+            {% else %}
+            <a class="btn p-2 text-dark rounded" href="{% url 'home' %}">Все категории</a>
+            {% endif %}
+            {% for c in cats %}
+            {% if c.pk == cat_selected %}
+            <a class="btn p-2 text-dark rounded selected" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+            {% else %}
+            <a class="btn p-2 text-dark rounded" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+            {% endif %}
+            {% endfor %}
+        </nav>
+        <nav class="my-2 my-md-auto mr-md-3">
+            {% for m in menu %}
+            <a class="btn p-2 text-dark rounded" href="{% url m.url_name %}">{{ m.title }}</a>
+            {% endfor %}
+            {% if request.user.is_authenticated %}
+            <a class="btn p-2 text-dark rounded" href="{% url 'cart:cart_detail' %}">Корзина
+                <i class="fa fa-shopping-basket green-color"></i>
+            </a>
 
-                    <a class="btn p-2 text-dark rounded" href="{% url 'profile' %}">{{ user.email }} </a>
-                    <a class="btn p-2 rounded btn-outline-danger" href="{% url 'logout' %}">Выйти</a>
-                {% else %}
-                    <a class="btn p-2 rounded btn-outline-success" href="{% url 'register' %}">Регистрация</a>
-                    <a class="btn p-2 rounded btn-outline-success" href="{% url 'login' %}">Войти</a>
-                {% endif %}
-            </nav>
+            <a class="btn p-2 text-dark rounded" href="{% url 'profile' %}">{{ user.email }} </a>
+            <a class="btn p-2 rounded btn-outline-danger" href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+            <a class="btn p-2 rounded btn-outline-success" href="{% url 'register' %}">Регистрация</a>
+            <a class="btn p-2 rounded btn-outline-success" href="{% url 'login' %}">Войти</a>
+            {% endif %}
+        </nav>
 
-        </div>
+    </div>
 
 
     {% endblock mainmenu %}
@@ -66,68 +65,68 @@
 
     <div class="footer">
         {% block footer %}
-            <footer class="bg-dark text-center text-white">
-                <!-- Grid container -->
-                <div class="container p-1 pb-0">
-                    <!-- Section: Social media -->
-                    <section class="mb-10">
-                        <!-- Twitter -->
-                        <a
-                                class="btn text-white btn-floating m-1"
-                                style="background-color: #55acee;"
-                                href="#!"
-                                role="button"
-                        ><i class="fab fa-twitter"></i
-                        ></a>
+        <footer class="bg-dark text-center text-white">
+            <!-- Grid container -->
+            <div class="container p-1 pb-0">
+                <!-- Section: Social media -->
+                <section class="mb-10">
+                    <!-- Twitter -->
+                    <a
+                            class="btn text-white btn-floating m-1"
+                            style="background-color: #55acee;"
+                            href="#!"
+                            role="button"
+                    ><i class="fab fa-twitter"></i
+                    ></a>
 
-                        <!-- Google -->
-                        <a
-                                class="btn text-white btn-floating m-1"
-                                style="background-color: #dd4b39;"
-                                href="https://www.google.ru/"
-                                role="button"
-                        ><i class="fab fa-google"></i
-                        ></a>
+                    <!-- Google -->
+                    <a
+                            class="btn text-white btn-floating m-1"
+                            style="background-color: #dd4b39;"
+                            href="https://www.google.ru/"
+                            role="button"
+                    ><i class="fab fa-google"></i
+                    ></a>
 
-                        <!-- Instagram -->
-                        <a
-                                class="btn text-white btn-floating m-1"
-                                style="background-color: #ac2bac;"
-                                href="#!"
-                                role="button"
-                        ><i class="fab fa-instagram"></i
-                        ></a>
+                    <!-- Instagram -->
+                    <a
+                            class="btn text-white btn-floating m-1"
+                            style="background-color: #ac2bac;"
+                            href="#!"
+                            role="button"
+                    ><i class="fab fa-instagram"></i
+                    ></a>
 
-                        <!-- Linkedin -->
-                        <a
-                                class="btn text-white btn-floating m-1"
-                                style="background-color: #0082ca;"
-                                href="#!"
-                                role="button"
-                        ><i class="fab fa-linkedin-in"></i
-                        ></a>
-                        <!-- Github -->
-                        <a
-                                class="btn text-white btn-floating m-1"
-                                style="background-color: #333333;"
-                                href="https://github.com/nemooo-trash"
-                                role="button"
-                        ><i class="fab fa-github"></i
-                        ></a>
-                    </section>
-                    <!-- Section: Social media -->
-                </div>
-                <!-- Grid container -->
-
-                <!-- Copyright -->
-                <div class="text-center p-1 bg-dark">
-                    © 2023 Copyright:
-                    <a class="text-white" href="/">SitePC.com</a>
-                </div>
-                <!-- Copyright -->
-            </footer>
+                    <!-- Linkedin -->
+                    <a
+                            class="btn text-white btn-floating m-1"
+                            style="background-color: #0082ca;"
+                            href="#!"
+                            role="button"
+                    ><i class="fab fa-linkedin-in"></i
+                    ></a>
+                    <!-- Github -->
+                    <a
+                            class="btn text-white btn-floating m-1"
+                            style="background-color: #333333;"
+                            href="https://github.com/nemooo-trash"
+                            role="button"
+                    ><i class="fab fa-github"></i
+                    ></a>
+                </section>
+                <!-- Section: Social media -->
             </div>
+            <!-- Grid container -->
+
+            <!-- Copyright -->
+            <div class="text-center p-1 bg-dark">
+                © 2023 Copyright:
+                <a class="text-white" href="/">SitePC.com</a>
             </div>
-        {% endblock footer %}
+            <!-- Copyright -->
+        </footer>
+    </div>
+</div>
+{% endblock footer %}
 </body>
 </html>

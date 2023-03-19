@@ -10,7 +10,7 @@ from django.views.generic import ListView, DetailView, TemplateView, CreateView,
 from django.urls import reverse_lazy
 from django.views import generic
 
-from SitePC.models import PC
+from SitePC.models import PC, Orders, Orders_PCs
 from SitePC.utils import DataMixin, menu
 from accounts.forms import RegisterUserForm, AuthUserForm, UserUpdateForm
 from django.shortcuts import render
@@ -30,6 +30,7 @@ class Profile(DataMixin, UpdateView):
     template_name = "SitePC/profile.html"
 
     success_url = reverse_lazy('home')
+
     def get_object(self):
         return get_current_authenticated_user()
 
@@ -40,10 +41,10 @@ class Profile(DataMixin, UpdateView):
             user = get_object_or_404(User, pk=get_current_authenticated_user().id)
             context['user'] = user
             c_def = self.get_user_context(title='Профиль ' + context['user'].email,
-                                      user=context['user'])
+                                          user=context['user'])
         else:
             c_def = self.get_user_context(title='Профиль ' + context['user'].email,
-                                      user=context['user'])
+                                          user=context['user'])
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -88,7 +89,8 @@ class ShowPC(DataMixin, DetailView):
         cart_pc_form = CartAddPCForm()
         context = super().get_context_data(**kwargs)
         key = cart_search(self.request, context['post'].id)
-        c_def = self.get_user_context(title='Купить ' + context['post'].title, cat_selected=context['post'].cat_id, cart_pc_form=cart_pc_form, key=key)
+        c_def = self.get_user_context(title='Купить ' + context['post'].title, cat_selected=context['post'].cat_id,
+                                      cart_pc_form=cart_pc_form, key=key)
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -144,3 +146,19 @@ def logout_user(request):
     logout(request)
     return redirect('login')
 
+
+def order_create(request):
+    if request.method == 'POST':
+        cart = Cart(request)
+        user = get_current_user()
+        address = request.POST['address']
+        total_price = request.POST['total_price']
+        order = Orders()
+        order.user = user
+        order.price = total_price
+        order.address = address
+        order.save()
+        for item in cart:
+            Orders_PCs.objects.create(order=order, pc=item['product'], count=item['quantity'])
+        Cart.clear(request)
+        return redirect('home')

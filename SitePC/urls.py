@@ -1,5 +1,6 @@
 from django.urls import path
 
+from SitePC import views
 from SitePC.views import helper, Home, Category, ShowPC, About, RegisterUser, LoginUser, logout_user, Profile
 
 urlpatterns = [
@@ -12,5 +13,6 @@ urlpatterns = [
     path('profile/', Profile.as_view(), name='profile'),
     path('product/<slug:slug>/', ShowPC.as_view(), name = 'product'),
     path('category/<slug:cat_slug>', Category.as_view(), name='category'),
+    path('orders/', views.order_create,name='orders'),
 
 ]

@@ -50,14 +50,14 @@
 <div class="card">
     <div class="card-body">
         <div class="row align-items-center col-md-12">
-            <div class="col-md-2 d-flex justify-content-center">
+            <div class="col-md-2 justify-content-center">
                 <img src="{{ product.photo.url }}"
                      class="img-thumbnail">
             </div>
-            <div class="col-md-2 d-flex justify-content-center">
+            <div class="col-md-2 justify-content-center">
                 <div class="text-center">{{ product.title }}</div>
             </div>
-            <div class="col-md-2 d-flex justify-content-center">
+            <div class="col-md-2 justify-content-center">
                 <div class="text-center">
                     {{ product.cpu }}, {{ product.cpu.count_core }} * {{ product.cpu.value }}
                     ГГц,
@@ -77,7 +77,7 @@
                 </div>
             </div>
 
-            <div class="col-md-2 d-flex justify-content-center">
+            <div class="col-md-2 justify-content-center">
                 <form action="{% url 'cart:cart_add' product.id %}" method="post">
                     <div class="text-center">
                         <button class="btn btn-link"
@@ -94,13 +94,13 @@
                     {% csrf_token %}
                 </form>
             </div>
-            <div class="col-md-1 d-flex justify-content-center">
+            <div class="col-md-1 justify-content-center">
                 <div class="text-center">{{ item.price }}</div>
             </div>
-            <div class="col-md-2 d-flex justify-content-center">
+            <div class="col-md-2 justify-content-center">
                 <div class="text-center">{{ item.total_price }}</div>
             </div>
-            <div class="col-md-1 d-flex justify-content-center">
+            <div class="col-md-1 justify-content-center">
                 <div class="text-center">
                     <a href="{% url 'cart:cart_remove' product.id %}" style="color:red;"><i
                             class="fa fa-trash red-color" aria-hidden="true"></i></a>

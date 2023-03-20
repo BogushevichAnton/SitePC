@@ -162,3 +162,21 @@ def order_create(request):
             Orders_PCs.objects.create(order=order, pc=item['product'], count=item['quantity'])
         Cart.clear(request)
         return redirect('home')
+
+
+class Orders_User(DataMixin, ListView):
+    model = Orders
+    template_name = "SitePC/orders.html"
+    context_object_name = 'orders'
+    allow_empty = False
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        all_Orders_PCS = Orders_PCs.objects.filter()
+        c_def = self.get_user_context(title='Ваши заказы', all_Orders_PCS=all_Orders_PCS)
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        user = get_current_user()
+        orders_user = Orders.objects.filter(user=user)
+        return orders_user

@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'SitePC/base.html' %}
+{% block title %}Profile Page {% endblock title %}
+{% block content %}
 
-</body>
-</html>
+
+{% for order in orders %}
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="card">
+        Номер заказа - {{ order.id }}
+        Адрес заказа - {{order.address}}
+
+        {% for v in order.products.all %}
+            Наименование товара - {{ v.title }}
+            {% for od in all_Orders_PCS %}
+                {% if order.id is od.order_id %}
+                    {% if v.id is od.pc_id %}
+                            Количество - {{ od.count }}
+                    {% else %}
+                        {% endif %}
+                        {% else %}
+                        {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+
+
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}

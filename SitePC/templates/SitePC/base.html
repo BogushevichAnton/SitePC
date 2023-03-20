@@ -41,6 +41,8 @@
             <a class="btn p-2 text-dark rounded" href="{% url 'cart:cart_detail' %}">Корзина
                 <i class="fa fa-shopping-basket green-color"></i>
             </a>
+            <a class="btn p-2 text-dark rounded" href="{% url 'orders' %}">Мои заказы
+            </a>
 
             <a class="btn p-2 text-dark rounded" href="{% url 'profile' %}">{{ user.email }} </a>
             <a class="btn p-2 rounded btn-outline-danger" href="{% url 'logout' %}">Выйти</a>

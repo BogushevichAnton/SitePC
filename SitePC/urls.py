@@ -1,7 +1,7 @@
 from django.urls import path
 
 from SitePC import views
-from SitePC.views import helper, Home, Category, ShowPC, About, RegisterUser, LoginUser, logout_user, Profile
+from SitePC.views import helper, Home, Category, ShowPC, About, RegisterUser, LoginUser, logout_user, Profile, Orders_User
 
 urlpatterns = [
     path('', Home.as_view(), name='home'),
@@ -13,6 +13,10 @@ urlpatterns = [
     path('profile/', Profile.as_view(), name='profile'),
     path('product/<slug:slug>/', ShowPC.as_view(), name = 'product'),
     path('category/<slug:cat_slug>', Category.as_view(), name='category'),
-    path('orders/', views.order_create,name='orders'),
+    path('orders/',Orders_User.as_view(), name='orders'),
+
+
+    path('cart_add_order/', views.order_create, name='orders_add'),   #post to add order
+
 
 ]

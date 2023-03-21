@@ -161,7 +161,7 @@ def order_create(request):
         for item in cart:
             Orders_PCs.objects.create(order=order, pc=item['product'], count=item['quantity'])
         Cart.clear(request)
-        return redirect('home')
+        return redirect('orders')
 
 
 class Orders_User(DataMixin, ListView):
@@ -178,5 +178,7 @@ class Orders_User(DataMixin, ListView):
 
     def get_queryset(self):
         user = get_current_user()
+
         orders_user = Orders.objects.filter(user=user)
+
         return orders_user

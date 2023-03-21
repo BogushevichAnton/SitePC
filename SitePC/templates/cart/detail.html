@@ -115,9 +115,10 @@
     <div class="col col-md-12 text-center">ОФОРМЛЕНИЕ ЗАКАЗА <i class="fa fa-shopping-cart green-color"
                                                                 aria-hidden="true"></i></div>
 </div>
-<form action="{% url 'orders_add' %}" method="post">
-    <div class="card mb-5">
-        <div class="card-body p-4">
+
+<div class="card mb-5">
+    <div class="card-body p-4">
+        <form action="{% url 'orders_add' %}" method="post">
             <div class="row col-md-12">
                 <div class="col col-md-6">
                     <div class="d-flex flex-row pb-3">
@@ -172,13 +173,18 @@
                 <input class="form-control" hidden="hidden"
                        name="user" id="{{user.id}}">
             </div>
+            <div class="row col-md-12">
+                <div class="col col-md-12">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-outline-success">Оформить заказа</button>
+                    </div>
+                </div>
+            </div>
             {% csrf_token %}
-
-
-        </div>
+        </form>
     </div>
-    <input type="submit" value="Submit">
-</form>
+</div>
+
 {% else %}
 <div class="row col-md-12 p-5">
     <div class="col col-md-12 text-center">

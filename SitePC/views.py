@@ -9,8 +9,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.views import generic
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 
+
+from SitePC.forms import HelpForm
 from SitePC.models import PC, Orders, Orders_PCs
+from SitePC.models import Category as CategoryModel
 from SitePC.utils import DataMixin, menu
 from accounts.forms import RegisterUserForm, AuthUserForm, UserUpdateForm
 from django.shortcuts import render
@@ -28,7 +33,6 @@ from cart.views import cart_search
 class Profile(DataMixin, UpdateView):
     form_class = UserUpdateForm
     template_name = "SitePC/profile.html"
-
     success_url = reverse_lazy('home')
 
     def get_object(self):
@@ -103,12 +107,6 @@ class About(DataMixin, TemplateView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-def helper(request):
-    context = {'title': 'Поддержка',
-               'menu': menu}
-    return render(request, "SitePC/help.html", context=context)
-
-
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1> Страница не найдена </h1>')
 
@@ -127,6 +125,25 @@ class RegisterUser(DataMixin, CreateView):
         user = form.save()
         login(self.request, user)
         return redirect('home')
+
+
+# class Helper(DataMixin, CreateView):
+#     template_name = "SitePC/help.html"
+#     form_class = HelpForm
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         user = get_current_authenticated_user()
+#         c_def = self.get_user_context(title='Поддержка', user = user)
+#         return dict(list(context.items()) + list(c_def.items()))
+#
+#     def form_valid(self, form):
+#         help = form.save(commit=False)
+#         help.user = get_current_user()
+#         help.save()
+#         return redirect('helper')
+
+
+
 
 
 class LoginUser(DataMixin, LoginView):
@@ -182,3 +199,25 @@ class Orders_User(DataMixin, ListView):
         orders_user = Orders.objects.filter(user=user)
 
         return orders_user
+
+def helper(request, **kwargs):
+    success = 0
+    context = kwargs
+    cats = CategoryModel.objects.all()
+    context['cats'] = cats
+    if 'cat_selected' not in context:
+        context['cat_selected'] = 0
+    if request.method == 'POST':
+        form = HelpForm(request.POST)
+        if form.is_valid():
+            try:
+                help = form.save(commit=False)
+                help.user = get_current_user()
+                help.save()
+                success = 1
+            except:
+                form.add_error(None, 'Ошибка обращения')
+    else:
+        form = HelpForm()
+
+    return render(request, 'SitePC/help.html', {'form':form, 'success':success, 'cats':cats} )

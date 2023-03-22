@@ -3,8 +3,9 @@ from urllib import request
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
-from django_currentuser.middleware import get_current_authenticated_user
+from django_currentuser.middleware import get_current_authenticated_user, get_current_user
 
+from SitePC.forms import HelpForm
 from SitePC.models import PC, Category
 from accounts.models import User
 from .cart import Cart
@@ -57,4 +58,5 @@ def cart_search(request, product_id):
     cart = Cart(request)
     key = cart.search(product_id)
     return key
+
 

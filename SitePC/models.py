@@ -120,3 +120,7 @@ class Orders_PCs(models.Model):
     pc = models.ForeignKey(PC, on_delete=models.CASCADE)
     count = models.IntegerField(verbose_name="Количество товара")
 
+class Help(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.CharField(max_length=255, verbose_name="Сообщение")
+    date = models.DateTimeField(auto_now_add=True)

@@ -2,7 +2,6 @@ from SitePC.models import *
 
 menu = [{'title': 'Главная', 'url_name': 'home'},
         {'title': 'О нас', 'url_name': 'about'},
-        {'title': 'Поддержка', 'url_name': 'helper'},
         ]
 
 class DataMixin:

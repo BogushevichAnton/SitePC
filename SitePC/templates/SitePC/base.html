@@ -38,6 +38,8 @@
             <a class="btn p-2 text-dark rounded" href="{% url m.url_name %}">{{ m.title }}</a>
             {% endfor %}
             {% if request.user.is_authenticated %}
+            <a class="btn p-2 text-dark rounded" href="{% url 'helper' %}">Поддержка
+            </a>
             <a class="btn p-2 text-dark rounded" href="{% url 'cart:cart_detail' %}">Корзина
                 <i class="fa fa-shopping-basket green-color"></i>
             </a>

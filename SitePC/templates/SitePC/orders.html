@@ -1,7 +1,14 @@
 {% extends 'SitePC/base.html' %}
 {% block title %}Profile Page {% endblock title %}
 {% block content %}
+{% if orders.count == 0 %}
+<div class="row col-md-12 mt-2">
+    <div class="col col-md-12">
+        <p class="text-center">у Вас нет еще ни одного заказа.</p>
+    </div>
+</div>
 
+{% else %}
 <div class="card" style="background-color: #eee; border:none;">
     <div class="card-body">
         <div class="row align-items-center col-md-12">
@@ -57,28 +64,28 @@
                     Наименование товара: {{v.title}}
                     Описание: {{v.cpu}}, {{ v.cpu.count_core }} * {{ v.cpu.value }}
                     ГГц,
-                        {% if v.count_ram == 1 %}
-                            {{ v.ram.memory }}
-                        {% else %}
-                            {{ v.count_ram }} * {{ v.ram.memory }}
-                        {% endif %}
+                    {% if v.count_ram == 1 %}
+                    {{ v.ram.memory }}
+                    {% else %}
+                    {{ v.count_ram }} * {{ v.ram.memory }}
+                    {% endif %}
                     ГБ {{ v.ram.type }},
                     {{ v.video }}, SSD
-                        {% if v.count_data == 1 %}
-                            {{ v.data.memory }}
-                        {% else %}
-                            {{ v.count_data }} * {{ v.data.memory }}
-                        {% endif %}
+                    {% if v.count_data == 1 %}
+                    {{ v.data.memory }}
+                    {% else %}
+                    {{ v.count_data }} * {{ v.data.memory }}
+                    {% endif %}
                     ГБ
-                        {% for od in all_Orders_PCS %}
-                            {% if order.id is od.order_id %}
-                                {% if v.id is od.pc_id %}
-                                     Количество: {{ od.count }}
-                                {% else %}
-                                {% endif %}
-                            {% else %}
-                            {% endif %}
-                        {% endfor %}
+                    {% for od in all_Orders_PCS %}
+                    {% if order.id is od.order_id %}
+                    {% if v.id is od.pc_id %}
+                    Количество: {{ od.count }}
+                    {% else %}
+                    {% endif %}
+                    {% else %}
+                    {% endif %}
+                    {% endfor %}
                 </div>
                 {% endfor %}
             </div>
@@ -99,6 +106,8 @@
     </div>
 </div>
 {% endfor %}
+{% endif %}
+
 
 <!--{% for order in orders %}-->
 <!--    Номер заказа - {{order.order.id}}-->

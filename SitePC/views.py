@@ -189,7 +189,6 @@ class Orders_User(DataMixin, ListView):
     model = Orders
     template_name = "SitePC/orders.html"
     context_object_name = 'orders'
-    allow_empty = False
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -199,9 +198,7 @@ class Orders_User(DataMixin, ListView):
 
     def get_queryset(self):
         user = get_current_user()
-
         orders_user = Orders.objects.filter(user=user)
-
         return orders_user
 
 def helper(request, **kwargs):
@@ -232,6 +229,9 @@ def reviews(request, **kwargs):
     context['cats'] = cats
     if 'cat_selected' not in context:
         context['cat_selected'] = 0
+    user = get_current_authenticated_user()
+    orders = Orders.objects.filter(user=user)
+
     if request.method == 'POST':
         form = ReviewsForm(request.POST)
         if form.is_valid():
@@ -244,11 +244,10 @@ def reviews(request, **kwargs):
                 review.user = get_current_user()
                 review.grade = rating
                 review.save()
-                success = 1
             except:
                 form.add_error(None, 'Ошибка добавления отзыва')
     else:
         form = ReviewsForm()
     rating = request.POST.get('rating')
-    rev = Reviews.objects.all()
-    return render(request, 'SitePC/reviews.html', {'form':form, 'cats':cats, 'menu':menu, 'rating':rating, 'reviews':rev})
+    rev = Reviews.objects.all().order_by('-date')
+    return render(request, 'SitePC/reviews.html', {'form':form, 'cats':cats, 'menu':menu, 'rating':rating, 'reviews':rev, 'count':orders.count()})

@@ -70,10 +70,14 @@
         <div class="col col-md-2">
 
             <div class="text-center">
+                {% if count == 0 %}
+                    <p>Для того, чтобы оставить отзыв, необходимо сделать хотя бы один заказ</p>
+                {% else %}
                 <button type="submit"
                         class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
                     Отправить отзыв
                 </button>
+                {% endif %}
             </div>
         </div>
         <div class="col col-md-5">

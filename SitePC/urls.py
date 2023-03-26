@@ -17,6 +17,7 @@ urlpatterns = [
     path('category/<slug:cat_slug>', Category.as_view(), name='category'),
     path('orders/', Orders_User.as_view(), name='orders'),
 
+    path('reviews/', views.reviews, name='reviews'),
 
     path('cart_add_order/', views.order_create, name='orders_add'),   #post to add order
 

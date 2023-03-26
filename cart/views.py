@@ -12,10 +12,8 @@ from .cart import Cart
 from .forms import CartAddPCForm
 from SitePC.utils import DataMixin
 
-menu = [{'title': 'Главная', 'url_name': 'home'},
-        {'title': 'О нас', 'url_name': 'about'},
-        {'title': 'Поддержка', 'url_name': 'helper'},
-        ]
+menu = [{'title': 'О нас', 'url_name': 'about'},
+        {'title': 'Отзывы', 'url_name': 'reviews'}]
 
 @require_POST
 def cart_add(request, product_id):

@@ -13,8 +13,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
 
-from SitePC.forms import HelpForm
-from SitePC.models import PC, Orders, Orders_PCs
+from SitePC.forms import HelpForm, ReviewsForm
+from SitePC.models import PC, Orders, Orders_PCs, Reviews
 from SitePC.models import Category as CategoryModel
 from SitePC.utils import DataMixin, menu
 from accounts.forms import RegisterUserForm, AuthUserForm, UserUpdateForm
@@ -28,6 +28,10 @@ from django_currentuser.middleware import (
 from cart.cart import Cart
 from cart.forms import CartAddPCForm
 from cart.views import cart_search
+
+menu = [{'title': 'О нас', 'url_name': 'about'},
+        {'title': 'Отзывы', 'url_name': 'reviews'}]
+
 
 
 class Profile(DataMixin, UpdateView):
@@ -220,4 +224,31 @@ def helper(request, **kwargs):
     else:
         form = HelpForm()
 
-    return render(request, 'SitePC/help.html', {'form':form, 'success':success, 'cats':cats} )
+    return render(request, 'SitePC/help.html', {'form':form, 'success':success, 'cats':cats, 'menu':menu})
+
+def reviews(request, **kwargs):
+    context = kwargs
+    cats = CategoryModel.objects.all()
+    context['cats'] = cats
+    if 'cat_selected' not in context:
+        context['cat_selected'] = 0
+    if request.method == 'POST':
+        form = ReviewsForm(request.POST)
+        if form.is_valid():
+            try:
+                if request.POST.get('rating') is None:
+                    rating = 5
+                else:
+                    rating = request.POST.get('rating')
+                review = form.save(commit=False)
+                review.user = get_current_user()
+                review.grade = rating
+                review.save()
+                success = 1
+            except:
+                form.add_error(None, 'Ошибка добавления отзыва')
+    else:
+        form = ReviewsForm()
+    rating = request.POST.get('rating')
+    rev = Reviews.objects.all()
+    return render(request, 'SitePC/reviews.html', {'form':form, 'cats':cats, 'menu':menu, 'rating':rating, 'reviews':rev})

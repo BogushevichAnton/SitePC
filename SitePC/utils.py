@@ -1,8 +1,7 @@
 from SitePC.models import *
 
-menu = [{'title': 'Главная', 'url_name': 'home'},
-        {'title': 'О нас', 'url_name': 'about'},
-        ]
+menu = [{'title': 'О нас', 'url_name': 'about'},
+        {'title': 'Отзывы', 'url_name': 'reviews'}]
 
 class DataMixin:
     def get_user_context(self, **kwargs):

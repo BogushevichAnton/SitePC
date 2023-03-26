@@ -1,0 +1,140 @@
+{% extends 'SitePC/base.html' %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div class="rating-area">
+        {% if rating is none%}
+        <input type="radio" id="star-5" name="rating" value="5">
+        <label for="star-5" title="Оценка «5»"></label>
+        <input type="radio" id="star-4" name="rating" value="4" checked>
+        <label for="star-4" title="Оценка «4»"></label>
+        <input type="radio" id="star-3" name="rating" value="3">
+        <label for="star-3" title="Оценка «3»"></label>
+        <input type="radio" id="star-2" name="rating" value="2">
+        <label for="star-2" title="Оценка «2»"></label>
+        <input type="radio" id="star-1" name="rating" value="1">
+        <label for="star-1" title="Оценка «1»"></label>
+        {% else %}
+        {% if rating == '5'%}
+        <input type="radio" id="star-5" name="rating" value="5" checked>
+        <label for="star-5" title="Оценка «5»"></label>
+        {% else %}
+        <input type="radio" id="star-5" name="rating" value="5">
+        <label for="star-5" title="Оценка «5»"></label>
+        {% endif %}
+        {% if rating == '4'%}
+        <input type="radio" id="star-4" name="rating" value="4" checked>
+        <label for="star-4" title="Оценка «4»"></label>
+        {% else %}
+        <input type="radio" id="star-4" name="rating" value="4">
+        <label for="star-4" title="Оценка «4»"></label>
+        {% endif %}
+        {% if rating == '3'%}
+        <input type="radio" id="star-3" name="rating" value="3" checked>
+        <label for="star-3" title="Оценка «3»"></label>
+        {% else %}
+        <input type="radio" id="star-3" name="rating" value="3">
+        <label for="star-3" title="Оценка «3»"></label>
+        {% endif %}
+        {% if rating == '2'%}
+        <input type="radio" id="star-2" name="rating" value="2" checked>
+        <label for="star-2" title="Оценка «2»"></label>
+        {% else %}
+        <input type="radio" id="star-2" name="rating" value="2">
+        <label for="star-2" title="Оценка «2»"></label>
+        {% endif %}
+        {% if rating == '1'%}
+        <input type="radio" id="star-1" name="rating" value="1" checked>
+        <label for="star-1" title="Оценка «1»"></label>
+        {% else %}
+        <input type="radio" id="star-1" name="rating" value="1">
+        <label for="star-1" title="Оценка «1»"></label>
+        {% endif %}
+        {% endif %}
+    </div>
+    {% for f in form %}
+    <div class="row col-md-12">
+        <div class="col col-md-12">
+            {% for f in form %}
+            <div class="form-outline mb-1">
+                <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
+                {{ f }}
+            </div>
+            <div class="form-outline" style="color: red">
+                <label class="form-label mw-100">{{ f.errors }}</label>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col col-md-5">
+        </div>
+        <div class="col col-md-2">
+
+            <div class="text-center">
+                <button type="submit"
+                        class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
+                    Отправить отзыв
+                </button>
+            </div>
+        </div>
+        <div class="col col-md-5">
+        </div>
+    </div>
+    {% endfor %}
+</form>
+<div class="row col-md-12 mt-4 mb-3">
+    <div class="col col-md-12">
+        <h2 class="text-uppercase text-center">Отзывы наших клиентов</h2>
+    </div>
+</div>
+{% for rev in reviews %}
+<div class="container mt-2 mb-2">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card" style="border-radius: 15px;">
+                <div class="card-body">
+                    <div class="form-outline mb-1">
+                        <label class="form-label">{{rev.user.first_name}} {{rev.user.last_name}}, рассказывает: </label>
+                        <p> {{rev.message}} </p>
+
+                        <p>Оценка:
+
+
+
+                        {% if rev.grade == 1 %}
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+                        {% elif rev.grade == 2 %}
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+
+                        {% elif rev.grade == 3 %}
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+                        {% elif rev.grade == 4 %}
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+                        {% elif rev.grade == 5 %}
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+                        <i class="fa fa-star" aria-hidden="true" style="color: orange"></i>
+                        {% else %}
+                        Оценка пропала(
+                        {% endif %}
+                             </p>
+
+                    </div>
+                    <div class="text-right">
+                        <p>{{rev.date}}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

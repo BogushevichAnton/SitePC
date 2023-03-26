@@ -124,3 +124,8 @@ class Help(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.CharField(max_length=255, verbose_name="Сообщение")
     date = models.DateTimeField(auto_now_add=True)
+class Reviews(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.CharField(max_length=255, verbose_name="Сообщение")
+    grade = models.IntegerField(verbose_name="Оценка")
+    date = models.DateTimeField(auto_now_add=True)

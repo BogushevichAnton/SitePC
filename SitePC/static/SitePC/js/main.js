@@ -96,4 +96,13 @@ $(function () {
 
   $('[data-toggle="datepicker"]').datepicker();
   $('[data-toggle="tooltip"]').tooltip();
+
+
+      $('#js-btn').on('click', function () {
+        $('.form-control').removeAttr("disabled");
+      });
 });
+
+
+
+

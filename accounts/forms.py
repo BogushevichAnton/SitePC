@@ -7,8 +7,6 @@ from .models import *
 
 User = get_user_model()
 
-
-# Берем Register и закидываем на него UserChangeForm
 class RegisterUserForm(UserCreationForm):
     email = forms.CharField(error_messages={"unique": "Уже есть пользователь с таким e-mail."}, label='E-mail',
                             widget=forms.EmailInput(
@@ -51,24 +49,24 @@ class UserUpdateForm(UserChangeForm):
     email = forms.CharField(error_messages={"unique": "Уже есть пользователь с таким e-mail адресом."},
                             label='E-mail',
                             widget=forms.EmailInput(
-                                attrs={'class': 'form-control'}
+                                attrs={'class': 'form-control', 'disabled': 'disabled'}
                             ))
 
     first_name = forms.CharField(label='Имя', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
+        attrs={'class': 'form-control', 'disabled': 'disabled'}
     ))
     last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
+        attrs={'class': 'form-control', 'disabled': 'disabled'}
     ))
     date_of_birth = forms.DateTimeField(label='Дата рождения', input_formats=['%d.%m.%Y'], widget=forms.DateInput(
         attrs={'class': 'form-control form-input', 'data-toggle': 'datepicker',
-               'placeholder': 'Дата рождения'}))
+               'placeholder': 'Дата рождения', 'disabled': 'disabled'}))
     mobile = forms.CharField(error_messages={"unique": "Уже есть пользователь с таким номером телефона."},
                              label='Номер телефона', widget=forms.TextInput(
-            attrs={'class': 'form-control'}
+            attrs={'class': 'form-control', 'disabled': 'disabled'}
         ))
     address = forms.CharField(label='Адрес', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
+        attrs={'class': 'form-control', 'disabled': 'disabled'}
     ), required=False)
     password = None
 

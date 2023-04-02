@@ -14,7 +14,7 @@ from django.views.decorators.http import require_POST
 
 
 from SitePC.forms import HelpForm, ReviewsForm
-from SitePC.models import PC, Orders, Orders_PCs, Reviews
+from SitePC.models import PC, Orders, Orders_PCs, Reviews, orders_status
 from SitePC.models import Category as CategoryModel
 from SitePC.utils import DataMixin, menu
 from accounts.forms import RegisterUserForm, AuthUserForm, UserUpdateForm
@@ -178,6 +178,7 @@ def order_create(request):
         order.user = user
         order.price = total_price
         order.address = address
+        order.status = orders_status.objects.get(pk=1)
         order.save()
         for item in cart:
             Orders_PCs.objects.create(order=order, pc=item['product'], count=item['quantity'])

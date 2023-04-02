@@ -73,7 +73,12 @@ class OrdersAdmin(admin.ModelAdmin):
     def user_phone(self, obj):
         return obj.user.mobile
 
+class orders_statusAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+    search_fields = ('name',)
+    list_display_links = ('id', 'name')
 
+admin.site.register(orders_status, orders_statusAdmin)
 admin.site.register(PC, PCAdmin)
 admin.site.register(Oper_System_type, OCAdmin)
 admin.site.register(data_drives, dataAdmin)

@@ -4,7 +4,6 @@ from django.urls import reverse
 from accounts.models import User
 
 
-# User._meta.get_field('email')._unique = True
 class CPUs(models.Model):
     title = models.CharField(max_length=50, verbose_name="Наименование ЦПУ")
     socket = models.CharField(max_length=10, verbose_name="Сокет")
@@ -108,12 +107,16 @@ class Category(models.Model):
         return reverse('category', kwargs={'cat_slug': self.slug})
 
 
+class orders_status(models.Model):
+    name = models.CharField(max_length=50, null=False)
+
 class Orders(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     address = models.CharField(max_length=255, null=False)
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Стоимость")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     products = models.ManyToManyField(PC, blank=True, related_name='models', through='Orders_PCs')
+    status = models.ForeignKey(orders_status, on_delete=models.CASCADE)
 
 class Orders_PCs(models.Model):
     order = models.ForeignKey(Orders, on_delete=models.CASCADE)

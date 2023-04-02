@@ -12,6 +12,7 @@
 <div class="card" style="background-color: #eee; border:none;">
     <div class="card-body">
         <div class="row align-items-center col-md-12">
+
             <div class="col-md-1 d-flex justify-content-center">
                 <div class="text-center text-muted">
                     Номер заказа
@@ -28,7 +29,7 @@
                     Описание заказа
                 </div>
             </div>
-            <div class="col col-md-2 d-flex justify-content-center">
+            <div class="col col-md-1 d-flex justify-content-center">
                 <div class="text-center text-muted">
                     Стоимость заказа
                 </div>
@@ -38,6 +39,13 @@
                     Дата заказа
                 </div>
             </div>
+            <div class="col col-md-1 d-flex justify-content-center">
+                <div class="text-center text-muted">
+                    Статус заказа
+                </div>
+            </div>
+
+
         </div>
     </div>
 </div>
@@ -89,7 +97,7 @@
                 </div>
                 {% endfor %}
             </div>
-            <div class="col-md-2 justify-content-center">
+            <div class="col-md-1 justify-content-center">
                 <div class="text-center">
                     {{order.price}}
                 </div>
@@ -97,6 +105,14 @@
             <div class="col-md-2 justify-content-center">
                 <div class="text-center">
                     {{order.date}}
+                </div>
+            </div>
+            <div class="col-md-1 justify-content-center">
+                <div class="text-center">
+                    {{order.status.name }}
+                    {% if order.status.pk == 3 %}
+                        <button type="button" class="btn btn-outline-success">Оплатить</button>
+                    {% endif %}
                 </div>
             </div>
 

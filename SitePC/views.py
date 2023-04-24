@@ -129,27 +129,6 @@ class RegisterUser(DataMixin, CreateView):
         user = form.save()
         login(self.request, user)
         return redirect('home')
-
-
-# class Helper(DataMixin, CreateView):
-#     template_name = "SitePC/help.html"
-#     form_class = HelpForm
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         user = get_current_authenticated_user()
-#         c_def = self.get_user_context(title='Поддержка', user = user)
-#         return dict(list(context.items()) + list(c_def.items()))
-#
-#     def form_valid(self, form):
-#         help = form.save(commit=False)
-#         help.user = get_current_user()
-#         help.save()
-#         return redirect('helper')
-
-
-
-
-
 class LoginUser(DataMixin, LoginView):
     form_class = AuthUserForm
     template_name = 'SitePC/login.html'

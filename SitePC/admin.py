@@ -18,8 +18,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class CPUAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title')
-    search_fields = ('title',)
+    list_display = ('id', 'title', 'socket')
+    search_fields = ('title', 'socket')
     list_display_links = ('id', 'title')
 
 
@@ -57,10 +57,15 @@ class OCAdmin(admin.ModelAdmin):
     list_display = ('id', 'title')
     search_fields = ('title',)
     list_display_links = ('id', 'title')
+class ItemInline(admin.StackedInline):
+    model = Orders_PCs
+    count = 0
+    extra = count
 class OrdersAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'date', 'user_first_name', 'user_last_name', 'user_phone')
+    inlines = [ItemInline]
+
     search_fields = ('user__email', 'user__mobile',)
-    filter_horizontal = ['products',]
     list_display_links = ('id', 'user')
     readonly_fields = ['date',]
 

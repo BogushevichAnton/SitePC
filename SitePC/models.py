@@ -109,6 +109,8 @@ class Category(models.Model):
 
 class orders_status(models.Model):
     name = models.CharField(max_length=50, null=False)
+    def __str__(self):
+        return self.name
 
 class Orders(models.Model):
     date = models.DateTimeField(auto_now_add=True)
